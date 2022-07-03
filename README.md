@@ -1,9 +1,6 @@
 # redditClone
-
-### This is A big project that aims to clone most of reddit featuers. 
-
-## what im working on 
 <br />
+This is A Full stack project that aims to clone most of reddit featuers. 
 
 # Database Design
 
@@ -11,4 +8,12 @@
 
 <br />
 
-###
+## what I'm working on. 
+
+* Understanding reddit
+* Trying To convert the website into Database Schema
+* Normalizing Schema As much as possible
+
+<be />
+
+## Todo
