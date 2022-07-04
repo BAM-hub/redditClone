@@ -1,16 +1,129 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
+// typeScript types
+enum Gender {
+  Male
+  Female
+}
+
+enum PostType {
+  Text
+  Link
+  Image
+  Pool
+}
+
+enum TagType {
+  OC
+  Spoiler
+  NSFW
+}
+
+// User
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  name     String
+  birthday DateTime
+  gender   Gender    @default(Male)
+  country  String?
+  data     DateTime  @default(now())
+  profile  Profile?
+  posts    Post[]
+  comments  Comment[]
+}
+
+// Profile
+model Profile {
+  id       Int               @id @default(autoincrement())
+  trophy   ProfileOnTrophy[]
+  userId   Int               @unique
+  Trophies User              @relation(fields: userId, references: id)
+}
+
+// Trophy
+model Trophy {
+  id       Int               @id @default(autoincrement())
+  name     String
+  profiles ProfileOnTrophy[]
+}
+
+// ProfileOnTrophy Relation
+model ProfileOnTrophy {
+  profile    Profile  @relation(fields: [profileId], references: [id])
+  profileId  Int
+  trophy     Trophy   @relation(fields: [trophyId], references: [id])
+  trophyId   Int
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([profileId, trophyId])
+}
+
+// post
+model Post {
+  id           Int         @id @default(autoincrement())
+  comunityId   Int         @unique
+  title        String
+  type         PostType    @default(Text)
+  text         String?
+  link         String?
+  image        String?
+  pool         Pool?
+  notification Boolean     @default(true)
+  published    Boolean     @default(false)
+  publishedAt  DateTime?
+  userId       Int         @unique
+  user         User        @relation(fields: userId, references: id)
+  tags         TagOnPost[]
+  comments      Comment[]
+}
+
+// Pool
+model Pool {
+  id       Int       @id @default(autoincrement())
+  duration Int
+  startAt  DateTime?
+  option   String
+  votes    Int       @default(0)
+  postId   Int       @unique
+  Post     Post      @relation(fields: postId, references: id)
+}
+
+// TagOnPost Relation
+model TagOnPost {
+  tag    Tag     @relation(fields: [tagId], references: [id])
+  tagId  Int
+  post   Post    @relation(fields: [postId], references: [id])
+  postId Int
+  type   TagType
+
+  @@id([tagId, postId])
+}
+
+// Tag
+model Tag {
+  id    Int         @id @default(autoincrement())
+  tag   TagType
+  posts TagOnPost[]
+}
+
+// Comment
+model Comment {
+  id        Int      @id @default(autoincrement())
+  postId    Int      @unique
+  Post      Post     @relation(fields: postId, references: id)
+  userId    Int      @unique
+  User      User     @relation(fields: userId, references: id)
+  text      String
+  createdAt DateTime @default(now())
 }
