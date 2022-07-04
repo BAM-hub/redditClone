@@ -9,7 +9,8 @@ This is A Full stack project that aims to clone most of reddit featuers.
 * Normalizing Schema As much as possible
 
 # Database Design Progress
-![redditClone db design ](https://user-images.githubusercontent.com/78625404/177058460-46e53f4f-f177-4587-b647-3b050b0b0253.png)
+![redditClone DB WP](https://user-images.githubusercontent.com/78625404/177108790-ccd4bc7b-315d-40ee-860c-240c5b4a4d5b.png)
+
 
 <br />
 
