@@ -10,9 +10,9 @@ const prisma = new PrismaClient();
 export class UserResolver {
   // find all users
 
-  @Query(() => User)
-  async users(): Promise<User | null> {
-    return null;
+  @Query(() => [User])
+  async users(): Promise<User[] | []> {
+    return await prisma.user.findMany();
   }
 
   @Mutation(() => User)
