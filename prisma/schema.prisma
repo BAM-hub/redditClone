@@ -1,12 +1,12 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  // previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  // referentialIntegrity = "prisma"
 }
 
 // typeScript types
@@ -36,7 +36,7 @@ model User {
   birthday        DateTime
   gender          Gender            @default(Male)
   country         String?
-  data            DateTime          @default(now())
+  date            DateTime?          @default(now())
   profile         Profile?
   posts           Post[]
   comments        Comment[]
