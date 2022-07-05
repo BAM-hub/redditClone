@@ -27,7 +27,7 @@ export class User {
   birthday: Date;
 
   @Field(() => Date, { defaultValue: Date.now(), nullable: true })
-  date?: Date;
+  date?: Date | null;
 
   // Todo Posts
 }
