@@ -15,6 +15,7 @@ export class UserResolver {
     return await prisma.user.findMany();
   }
 
+  // create user
   @Mutation(() => User)
   async createUser(
     @Arg("name") name: string,
@@ -33,5 +34,11 @@ export class UserResolver {
       },
     });
     return user;
+  }
+
+  // get user by username
+  @Query(() => User)
+  async getUser(@Arg("name", () => String) name: string): Promise<User | null> {
+    return await prisma.user.findUnique({ where: { name } });
   }
 }
