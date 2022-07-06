@@ -4,13 +4,14 @@ import * as express from "express";
 import { graphqlHTTP } from "express-graphql";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/UserResolver";
+import { PostResolver } from "./resolvers/PostResolver";
 
 const prisma = new PrismaClient();
 const app = express();
 
 const main = async () => {
   const schema = await buildSchema({
-    resolvers: [UserResolver],
+    resolvers: [UserResolver, PostResolver],
   });
   app.use(
     "/graphql",
