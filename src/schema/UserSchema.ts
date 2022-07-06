@@ -1,6 +1,10 @@
-import { Field, ObjectType, registerEnumType } from "type-graphql";
+import { Field, ObjectType, registerEnumType, Root } from "type-graphql";
 import { Gender } from "prisma/prisma-client";
 import { DateScalar } from "../Scalars/dateScalar";
+import { Post } from "./PostSchema";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 registerEnumType(Gender, {
   name: "Gender",
@@ -9,7 +13,7 @@ registerEnumType(Gender, {
 @ObjectType()
 export class User {
   @Field(() => Number)
-  id: Number;
+  id: number;
 
   @Field(() => String)
   name: String;
@@ -29,5 +33,8 @@ export class User {
   @Field(() => Date, { defaultValue: Date.now(), nullable: true })
   date?: Date | null;
 
-  // Todo Posts
+  @Field(() => [Post], { nullable: true })
+  async userPosts?(@Root() user: User): Promise<Post[] | null> {
+    return await prisma.post.findMany({ where: { userId: user.id } });
+  }
 }
