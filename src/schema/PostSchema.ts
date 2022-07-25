@@ -1,5 +1,11 @@
 import { DateScalar } from "../Scalars/dateScalar";
-import { Field, ObjectType, registerEnumType, Root } from "type-graphql";
+import {
+  Field,
+  InputType,
+  ObjectType,
+  registerEnumType,
+  Root,
+} from "type-graphql";
 import { PostType } from "prisma/prisma-client";
 import { PrismaClient } from "@prisma/client";
 
@@ -18,7 +24,7 @@ export class Post {
   userId: number;
 
   @Field(() => Number, { nullable: true })
-  comunityId?: number;
+  comunityId?: number | null;
 
   @Field(() => PostType)
   type: PostType;
@@ -55,6 +61,39 @@ export class Post {
   async getPool?(@Root() post: Post): Promise<Pool | null> {
     return await prisma.pool.findUnique({ where: { postId: post.id } });
   }
+}
+
+@InputType()
+export class PostInput {
+  @Field(() => Number)
+  userId: number;
+
+  @Field(() => PostType)
+  type: PostType;
+
+  @Field(() => String)
+  title: string;
+
+  @Field(() => String, { nullable: true })
+  text?: string | null;
+
+  @Field(() => DateScalar, { nullable: true })
+  publishedAt: Date | null;
+
+  @Field(() => String, { nullable: true })
+  image?: string | null;
+
+  @Field(() => String, { nullable: true })
+  link?: string | null;
+
+  @Field(() => Boolean)
+  notification: boolean;
+
+  @Field(() => Boolean)
+  published: boolean;
+
+  @Field(() => Pool, { nullable: true })
+  pool?: Pool;
 }
 
 // Pooloption
