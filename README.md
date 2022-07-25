@@ -10,7 +10,8 @@ This is A Full stack project that aims to clone most of reddit featuers.
 * Backend Code.
 
 # Database Design Progress
-![redditClone DB WP](https://user-images.githubusercontent.com/78625404/177108790-ccd4bc7b-315d-40ee-860c-240c5b4a4d5b.png)
+![DBD](https://user-images.githubusercontent.com/78625404/177963331-3ed3e32c-ba0d-42f5-a737-69936470ef62.png)
+
 
 <br />
 
