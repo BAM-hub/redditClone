@@ -74,21 +74,22 @@ model ProfileOnTrophy {
 
 // post
 model Post {
-  id           Int         @id @default(autoincrement())
-  comunityId   Int         @unique
+  id           Int       @id @default(autoincrement())
+  comunityId   Int?      @unique
+  userId       Int       @unique
   title        String
-  type         PostType    @default(Text)
+  type         PostType  @default(Text)
   text         String?
   link         String?
   image        String?
   pool         Pool?
-  notification Boolean     @default(true)
-  published    Boolean     @default(false)
+  notification Boolean   @default(true)
+  published    Boolean   @default(false)
   publishedAt  DateTime?
-  userId       Int         @unique
-  user         User        @relation(fields: userId, references: id)
-  tags         TagOnPost[]
-  comments     Comment[]
+
+  user     User        @relation(fields: userId, references: id)
+  tags     TagOnPost[]
+  comments Comment[]
 }
 
 // Pool
